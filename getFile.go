@@ -7,21 +7,24 @@ import (
 )
 
 // GetFile - Получает файл размером dataLen из conn и сохраняетего в dirToFiles c именем fileName
-func GetFile(fileName string, dataLen int, dirToFiles string, conn net.Conn) error {
+func GetFile(path string, dataLen int, conn net.Conn) error {
 	var currentByte int64 = 0
-	file, err := os.Create(dirToFiles + "/" + fileName)
+	file, err := os.Create(path)
 	if err != nil {
 		return errors.New("ошибка создания файла")
 	}
-	defer file.Close()
 	countAll := 0
 	for {
 		count, data, err := ReadBytes(conn)
 		if err != nil {
+			file.Close()
+			os.Remove(path)
 			return err
 		}
 		_, err = file.WriteAt(data, currentByte)
 		if err != nil {
+			file.Close()
+			os.Remove(path)
 			return errors.New("ошибка записи файла")
 		}
 		currentByte += int64(count)
@@ -30,5 +33,6 @@ func GetFile(fileName string, dataLen int, dirToFiles string, conn net.Conn) err
 			break
 		}
 	}
+	file.Close()
 	return nil
 }
