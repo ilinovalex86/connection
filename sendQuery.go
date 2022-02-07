@@ -5,9 +5,9 @@ import (
 	"net"
 )
 
-// SendQRStruct - Отправляет структуру QueryResponse в conn
-func SendQRStruct(qr QueryResponse, conn net.Conn) error {
-	data, err := json.Marshal(qr)
+// SendQuery - Отправляет структуру Query в conn
+func SendQuery(q Query, conn net.Conn) error {
+	data, err := json.Marshal(q)
 	if err != nil {
 		return err
 	}
