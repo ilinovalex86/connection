@@ -10,3 +10,11 @@ type Response struct {
 	DataLen  int
 	Err      string
 }
+
+type Event struct {
+	Method string
+	Event  string
+	CorX   int
+	CorY   int
+	Ctrl   bool
+}
