@@ -17,4 +17,5 @@ type Event struct {
 	CorX   int
 	CorY   int
 	Ctrl   bool
+	Shift  bool
 }
