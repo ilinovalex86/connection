@@ -1,8 +1,9 @@
 package connection
 
 type Query struct {
-	Method string
-	Query  string
+	Method  string
+	Query   string
+	DataLen int
 }
 
 type Response struct {
