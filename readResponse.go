@@ -20,6 +20,8 @@ func ReadResponse(conn net.Conn) (Response, error) {
 	if err != nil {
 		return Response{}, err
 	}
-	newR := Response{Response: r.Response, DataLen: r.DataLen, Err: errors.New(r.Err)}
-	return newR, nil
+	if r.Err != "" {
+		return Response{Response: r.Response, DataLen: r.DataLen, Err: errors.New(r.Err)}, nil
+	}
+	return Response{Response: r.Response, DataLen: r.DataLen}, nil
 }
