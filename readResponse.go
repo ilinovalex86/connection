@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net"
 )
 
@@ -21,7 +22,9 @@ func ReadResponse(conn net.Conn) (Response, error) {
 		return Response{}, err
 	}
 	if r.Err != "" {
+		fmt.Println("yes err")
 		return Response{Response: r.Response, DataLen: r.DataLen, Err: errors.New(r.Err)}, nil
 	}
-	return Response{Response: r.Response, DataLen: r.DataLen}, nil
+	fmt.Println("no err")
+	return Response{Response: r.Response, DataLen: r.DataLen, Err: nil}, nil
 }
