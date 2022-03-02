@@ -9,5 +9,5 @@ type Query struct {
 type Response struct {
 	Response string
 	DataLen  int
-	Err      error
+	Err      string
 }
