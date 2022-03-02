@@ -9,5 +9,11 @@ type Query struct {
 type Response struct {
 	Response string
 	DataLen  int
+	Err      error
+}
+
+type responseJS struct {
+	Response string
+	DataLen  int
 	Err      string
 }

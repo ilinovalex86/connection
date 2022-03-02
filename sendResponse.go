@@ -2,12 +2,14 @@ package connection
 
 import (
 	"encoding/json"
+	"fmt"
 	"net"
 )
 
 // SendResponse - Отправляет структуру QueryResponse в conn
 func SendResponse(r Response, conn net.Conn) error {
-	data, err := json.Marshal(r)
+	newR := responseJS{Response: r.Response, DataLen: r.DataLen, Err: fmt.Sprint(r.Err)}
+	data, err := json.Marshal(newR)
 	if err != nil {
 		return err
 	}

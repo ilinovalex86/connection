@@ -10,7 +10,7 @@ import (
 
 // ReadResponse - Получает структуру Response из conn
 func ReadResponse(conn net.Conn) (Response, error) {
-	var r Response
+	var r responseJS
 	b, err := bufio.NewReader(conn).ReadBytes('\n')
 	if err != nil {
 		return Response{}, errors.New("error read struct from conn")
@@ -20,5 +20,6 @@ func ReadResponse(conn net.Conn) (Response, error) {
 	if err != nil {
 		return Response{}, err
 	}
-	return r, nil
+	newR := Response{Response: r.Response, DataLen: r.DataLen, Err: errors.New(r.Err)}
+	return newR, nil
 }
