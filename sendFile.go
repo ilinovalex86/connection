@@ -2,6 +2,7 @@ package connection
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"net"
 	"os"
@@ -14,6 +15,11 @@ func SendFile(filePath string, conn net.Conn) error {
 		return errors.New("error open")
 	}
 	defer file.Close()
+	info, err := file.Stat()
+	if err != nil {
+		return err
+	}
+	fileSize := info.Size()
 	var currentByte int64 = 0
 	for {
 		fileBuffer := make([]byte, 1024)
@@ -30,6 +36,7 @@ func SendFile(filePath string, conn net.Conn) error {
 						return errors.New("error send file")
 					}
 				}
+				fmt.Println("Отправка файла: 100%")
 				break
 			}
 		}
@@ -38,6 +45,7 @@ func SendFile(filePath string, conn net.Conn) error {
 			return errors.New("error send file")
 		}
 		currentByte += 1024
+		fmt.Printf("Отправка файла: %3.f%%\n", float32(currentByte)/float32(fileSize)*float32(100))
 	}
 	return nil
 }

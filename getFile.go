@@ -2,6 +2,7 @@ package connection
 
 import (
 	"errors"
+	"fmt"
 	"net"
 	"os"
 )
@@ -29,10 +30,12 @@ func GetFile(path string, dataLen int, conn net.Conn) error {
 		}
 		currentByte += int64(count)
 		countAll += count
+		fmt.Printf("Загрузка файла: %3.f%%\n", float32(countAll)/float32(dataLen)*float32(100))
 		if countAll == dataLen {
 			break
 		}
 	}
+	fmt.Println()
 	file.Close()
 	return nil
 }
