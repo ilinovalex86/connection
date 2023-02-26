@@ -45,7 +45,7 @@ func SendFile(filePath string, conn net.Conn) error {
 			return errors.New("error send file")
 		}
 		currentByte += 1024
-		fmt.Printf("Отправка файла: %3.f%%\n", float32(currentByte)/float32(fileSize)*float32(100))
+		fmt.Printf("Отправка файла: %3.f%%\r", float32(currentByte)/float32(fileSize)*float32(100))
 	}
 	return nil
 }
