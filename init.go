@@ -17,3 +17,9 @@ type responseJS struct {
 	DataLen  int
 	Err      string
 }
+
+func timeCount(sec int) (int, int) {
+	m := sec / 60
+	s := sec % 60
+	return m, s
+}

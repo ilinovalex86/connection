@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"time"
 )
 
 // GetFile - Получает файл размером dataLen из conn и сохраняетего в dirToFiles c именем fileName
@@ -15,6 +16,7 @@ func GetFile(path string, dataLen int, conn net.Conn) error {
 		return errors.New("ошибка создания файла")
 	}
 	countAll := 0
+	t := time.Now()
 	for {
 		count, data, err := ReadBytes(conn)
 		if err != nil {
@@ -30,7 +32,10 @@ func GetFile(path string, dataLen int, conn net.Conn) error {
 		}
 		currentByte += int64(count)
 		countAll += count
-		fmt.Printf("Загрузка файла: %3.f%%\r", float32(countAll)/float32(dataLen)*float32(100))
+		p := float32(currentByte) / float32(dataLen) * float32(100)
+		s := float32(currentByte) / float32(time.Now().Sub(t).Seconds()) / float32(1024)
+		m, sec := timeCount(int(float32(dataLen-int(currentByte)) / float32(1024) / s))
+		fmt.Printf("Отправка файла: %8d/%d %3.f%% %10.f kb/s %6dm %02ds %10s\r", currentByte/1024, dataLen/1024, p, s, m, sec, "")
 		if countAll == dataLen {
 			break
 		}
