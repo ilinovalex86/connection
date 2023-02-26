@@ -39,7 +39,7 @@ func SendFile(filePath string, conn net.Conn) error {
 					}
 				}
 				s := float32(currentByte) / float32(time.Now().Sub(t).Seconds()) / float32(1024)
-				fmt.Printf("Отправка файла: %8d/%d 100%% %10.f kb/s      0m 00s %10s\n", fileSize/1024, fileSize/1024, s, "")
+				fmt.Printf("Отправка файла: %8d/%d 100%% %10s      0m 00s %10s\n", fileSize/1024, fileSize/1024, speedCount(s), "")
 				break
 			}
 		}
@@ -50,8 +50,8 @@ func SendFile(filePath string, conn net.Conn) error {
 		currentByte += 1024
 		p := float32(currentByte) / float32(fileSize) * float32(100)
 		s := float32(currentByte) / float32(time.Now().Sub(t).Seconds()) / float32(1024)
-		m, sec := timeCount(int(float32(fileSize-currentByte) / float32(1024) / s))
-		fmt.Printf("Отправка файла: %8d/%d %3.f%% %10.f kb/s %6dm %02ds %10s\r", currentByte/1024, fileSize/1024, p, s, m, sec, "")
+		m, sec := secToMinSec(int(float32(fileSize-currentByte) / float32(1024) / s))
+		fmt.Printf("Отправка файла: %8d/%d %3.f%% %10s %6dm %02ds %10s\r", currentByte/1024, fileSize/1024, p, speedCount(s), m, sec, "")
 	}
 	return nil
 }
