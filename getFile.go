@@ -37,6 +37,7 @@ func GetFile(path string, dataLen int, conn net.Conn) error {
 		m, sec := secToMinSec(int(float32(dataLen-int(currentByte)) / float32(1024) / s))
 		fmt.Printf("Загрузка файла: %8d/%d %3.f%% %10s %6dm %02ds %10s\r", currentByte/1024, dataLen/1024, p, speedCount(s), m, sec, "")
 		if countAll == dataLen {
+			s := float32(dataLen) / float32(time.Now().Sub(t).Seconds()) / float32(1024)
 			m, sec = secToMinSec(int(time.Now().Sub(t).Seconds()))
 			fmt.Printf("Загрузка файла: %8d/%d %3.f%% %10s %6dm %02ds %10s\r", currentByte/1024, dataLen/1024, p, speedCount(s), m, sec, "")
 			break
