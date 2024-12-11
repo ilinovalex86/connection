@@ -10,3 +10,4 @@ Package connection содержит функции для работы с net.Co
    FileName string
    Err      error
  }
+
